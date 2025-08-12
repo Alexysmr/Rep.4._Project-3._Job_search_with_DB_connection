@@ -1,6 +1,7 @@
 import logging
 import os
 from pathlib import Path
+
 from dotenv import load_dotenv
 
 # Пути к файлам
@@ -10,10 +11,10 @@ LOGS_DIR = BASE_DIR / "logs"  # Директория с логами
 
 # Настройка подключения к базе данных
 load_dotenv(BASE_DIR / ".env")
-DB_NAME = os.getenv('DB_NAME')
-DB_USER = os.getenv('DB_USER')
-DB_PASSWORD = os.getenv('DB_PASSWORD')
-DB_HOST = os.getenv('DB_HOST')
+DB_NAME = os.getenv("DB_NAME")
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_HOST = os.getenv("DB_HOST")
 
 # Настройки API HH.ru
 HH_API_URL = "https://api.hh.ru/vacancies"
@@ -31,9 +32,9 @@ ID_COMPANY_ON_HHRU = {
     "Авито": 84585,
     "Wildberries": 87021,
     "Газпром нефть": 39305,
-    "Лукойл": 907345
+    "Лукойл": 907345,
 }  # - коды компаний на hh.ru
-ONLY_SALARY = 0  # Все варианты вакансий по зарплате, 1 - только с указанной зарплатой
+ONLY_SALARY = None  # Все варианты вакансий по зарплате, 1 - только с указанной зарплатой
 DEFAULT_CURRENCY = "RUR"  # Валюта по умолчанию
 
 # Настройки файлов
