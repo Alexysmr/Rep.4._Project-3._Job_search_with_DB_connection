@@ -27,11 +27,11 @@ def check_exist_json_data(file_path: Path | None = None, file_name: str | None =
         if not content[0].get("data") or not content[1].get("_metadata"):
             logger.info("Отсутствуют вакансии или метаданные")
             return False
-        if current_params:
-            logger.info("Проверка данных на соответствие параметрам запроса")
-            if [content[1].get("_metadata").get("company_id_dict"), content[1].get("_metadata").get("area"),
-                content[1].get("_metadata").get("salary")] != current_params:
-                return False
+        if current_params and [content[1].get("_metadata").get("company_id_dict"),
+                               content[1].get("_metadata").get("area"),
+                               content[1].get("_metadata").get("salary")] != current_params:
+            logger.info("Параметры запроса либо отсутствуют в метаданных, либо не совпадают")
+            return False
     except (json.JSONDecodeError, ValueError):
         return False
     logger.info(f"Файл {data_file} - JSON-файл с актуальными данными")
@@ -58,3 +58,10 @@ def overwriting_json_data(data: Dict[str, Any] | None = None, file_path: Path = 
     with open(data_file, "w", encoding="utf-8") as file:
         json.dump(data_to_save, file, indent=4, ensure_ascii=False)
         logger.info(f"Данные сохранены в {data_file}")
+
+
+def print_vacancies(vacancies):
+    """Вывод результатов в консоль"""
+    for v in vacancies:
+        print(f"Компания: {v['company']}\nДолжность: {v['title']}\nЗарплата: {v['salary_from']}-{v['salary_to']} "
+              f"{v['currency']}\nСсылка: {v['url']}\n")

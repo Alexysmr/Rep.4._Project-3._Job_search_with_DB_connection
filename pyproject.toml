@@ -6,7 +6,6 @@ authors = [{name = "Fomenko Aleksey", email = "alexxsmr@yandex.ru"}]
 readme = "README.md"
 requires-python = "3.13.1"
 dependencies = [
-    "pytest (>=8.3.4,<9.0.0)",
     "requests>=2.31.0",
     "pandas>=2.0.0",
     "python-dotenv>=1.0.0",

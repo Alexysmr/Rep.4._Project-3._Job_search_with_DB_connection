@@ -1,4 +1,3 @@
-# import json
 import os
 import time
 import requests
@@ -63,7 +62,7 @@ class HHAPIClient(AbstractAPIClient):
         pages - количество страниц вакансий по каждому работодателю, по умолчанию 1 страница;
         param salary: любой символ — только с зарплатой, ""(None) — все вакансии.
         """
-        with_salary = 1 if salary else 0
+        with_salary = 1 if salary is not None else 0
         if not company_id_dict:
             logger.warning("Пустой словарь компаний!. Exit")
             exit("Отсутствуют данные для запроса по компаниям. Работа программы завершена.\n"

@@ -19,10 +19,11 @@ class DBManager:
         self.conn.autocommit = True
         self.file_path = file_path
         self.file_name = file_name
-        logger.info(f"Инициализатор")
+        logger.info("Инициализатор")
         self.all_data = read_json_data(self.file_path, self.file_name)
         self.all_vacancies = self.all_data[0].get("data")
         self.company = self.all_data[1].get("_metadata").get("company_id_dict")
+        logger.info("Все вакансии и список компаний из _metadata получены")
 
     def __iter__(self) -> iter:
         """Итерируем список вакансий"""
@@ -42,6 +43,7 @@ class DBManager:
                 columns = [desc[0] for desc in cur.description]
                 return [dict(zip(columns, row)) for row in cur.fetchall()]
         except psycopg2.Error as er:
+            self.conn.rollback()
             logger.error(f"Ошибка: {er}")
             return []
 

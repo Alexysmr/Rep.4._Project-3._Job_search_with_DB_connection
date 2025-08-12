@@ -3,18 +3,11 @@ import os
 from src.config import (DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DATA_DIR, HH_API_AREA, PAGES, ID_COMPANY_ON_HHRU,
                         DEFAULT_JSON_FILE, CACHE_EXPIRE_HOURS, setup_logging)
 from src.database_processings import DBManager
-from src.utils import check_exist_json_data
+from src.utils import check_exist_json_data, print_vacancies
 from src.api_client import HHAPIClient
 
 modul_name = os.path.basename(__file__)
 logger = setup_logging(modul_name)
-
-
-def print_vacancies(vacancies):
-    """Вывод результатов в консоль"""
-    for v in vacancies:
-        print(f"Компания: {v['company']}\nДолжность: {v['title']}\nЗарплата: {v['salary_from']}-{v['salary_to']} "
-              f"{v['currency']}\nСсылка: {v['url']}\n")
 
 
 if __name__ == "__main__":
@@ -56,12 +49,16 @@ if __name__ == "__main__":
         logger.info("Обновляем данные")
 
     db_manager = DBManager(file_path=DATA_DIR, file_name=DEFAULT_JSON_FILE)
+    logger.info("Создаем экземпляр DBmanager")
 
     db_manager.create_database()
+    logger.info("Создаем экземпляр БД")
 
     db_manager.create_tables()
+    logger.info("Создаем экземпляр таблицы")
 
     db_manager.save_to_database()
+    logger.info("Заполняем таблицы")
 
     print("\nКомпании и количество вакансий:")
     vacancies_count = db_manager.get_companies_and_vacancies_count()
